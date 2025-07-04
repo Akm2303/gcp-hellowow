@@ -7,7 +7,7 @@ on:
 
 env: 
     GCP_PROJECT_ID: arboreal-cosmos-440011-r8
-    GCP_ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow
+    GCP_ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/gcp-hellowow
 
 jobs:
   docker-build:

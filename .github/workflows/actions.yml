@@ -51,7 +51,7 @@ jobs:
         env:
           GCP_ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/gcp-hellowow
         run: |
-          gcloud run deploy gcp-hellowow  \
+          DEPLOY_OUTPUT=$(gcloud run deploy gcp-hellowow  \
             --image "$GCP_ARTIFACT_REGISTRY/hellowow:latest" \
             --platform managed \
             --region asia-southeast2 \
@@ -61,6 +61,7 @@ jobs:
             --max-instances 1 \
             --allow-unauthenticated \
             --project ${{ env.GCP_PROJECT_ID  }} \
+            --format=json)
 
           URL=$(echo "$DEPLOY_OUTPUT" | jq -r '.status.url')
           echo "✅ Cloud Run deployed to: $URL"

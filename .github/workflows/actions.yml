@@ -39,5 +39,5 @@ jobs:
           service: hello-api
           image: asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow/hellowow:latest
           region: asia-southeast2
-          allow-unauthenticated: true
+          allow-unauthenticated: false
         

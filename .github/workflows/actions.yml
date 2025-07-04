@@ -30,5 +30,5 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/hello-go-repo/hello-go:latest .
-          docker push asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/hello-go-repo/hello-go:latest
+          docker build -t asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow/hellowow:latest .
+          docker push asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow/hellowow:latest

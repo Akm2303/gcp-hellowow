@@ -1,9 +1,12 @@
-name: Build and Push to GCP-cicd registry
+name: gcp-cicd
 
 on:
   push:
     branches:
       - main
+
+env: 
+    GCP_PROJECT_ID: arboreal-cosmos-440011-r8
 
 jobs:
   docker-build:
@@ -21,11 +24,11 @@ jobs:
         with:
           credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
 
-#     - name: Configure Docker for Artifact Registry
-#      run: |
-#          gcloud auth configure-docker asia-southeast2-docker.pkg.dev
+      - name: Configure Docker for Artifact Registry
+        run: |
+             gcloud auth configure-docker asia-southeast2-docker.pkg.dev
 
       - name: Build and Push Docker image
         run: |
-          docker build -t asia-southeast2-docker.pkg.dev/arboreal-cosmos-440011-r8/hello-go-repo/hello-go:latest .
-#          docker push asia-southeast2-docker.pkg.dev/arboreal-cosmos-440011-r8/hello-go-repo/hello-go:latest
+          docker build -t asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/hello-go-repo/hello-go:latest .
+          docker push asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/hello-go-repo/hello-go:latest

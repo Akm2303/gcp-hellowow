@@ -7,6 +7,7 @@ on:
 
 env: 
     GCP_PROJECT_ID: arboreal-cosmos-440011-r8
+    GCP_ARTIFACT_REGISTRY: asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow
 
 jobs:
   docker-build:
@@ -30,14 +31,21 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow/hellowow:latest .
-          docker push asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow/hellowow:latest
-      
+          docker build -t $GCP_ARTIFACT_REGISTRY/hellowow:latest .
+          docker push $GCP_ARTIFACT_REGISTRY/hellowow:latest
+
+  deploy-cloud-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}'
       - name: Deploy to Cloud Run
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: hello-api
-          image: asia-southeast2-docker.pkg.dev/$GCP_PROJECT_ID/gcp-hellowow/hellowow:latest
+          image: $GCP_ARTIFACT_REGISTRY/hellowow:latest
           region: asia-southeast2
-          allow-unauthenticated: false
-        
+#          allow-unauthenticated: false
+

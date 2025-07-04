@@ -59,5 +59,12 @@ jobs:
             --memory 512Mi \
             --cpu 1 \
             --max-instances 1 \
+            --allow-unauthenticated \
             --project ${{ env.GCP_PROJECT_ID  }} \
 
+          URL=$(echo "$DEPLOY_OUTPUT" | jq -r '.status.url')
+          echo "✅ Cloud Run deployed to: $URL"
+          echo "CLOUD_RUN_URL=$URL" >> $GITHUB_ENV
+      - name: Show Deployed URL
+        run: |
+          echo "🚀 Cloud Run URL: $CLOUD_RUN_URL"
